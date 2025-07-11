@@ -1,13 +1,11 @@
 #pragma once
+#include "GameObject.h"
+
 class Physics
 {
 protected:
-	float mass;
-	float friction;
-	float restitution;
-
 
 public:
-
+	static void Collision(GameObject& obj1, GameObject& obj2);
 };
 

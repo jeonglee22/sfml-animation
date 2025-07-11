@@ -2,8 +2,7 @@
 #include "GameObject.h"
 #include "HitBox.h"
 
-class Block :
-    public GameObject
+class Block : public GameObject
 {
 protected:
 	sf::RectangleShape body;
@@ -25,6 +24,17 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
+
+	sf::FloatRect GetLocalBounds() const override
+	{
+		return body.getLocalBounds();
+	}
+	sf::FloatRect GetGlobalBounds() const override
+	{
+		return body.getGlobalBounds();
+	}
+
+	HitBox GetHitBox() { return hitBox; }
 
 };
 

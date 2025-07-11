@@ -196,6 +196,11 @@ float Utils::Angle(const sf::Vector2f& vec)
     return RadianToDegree(AngleRadian(vec));
 }
 
+sf::Vector2f Utils::Direction(float angle)
+{
+    return Utils::GetNormal(sf::Vector2f(cos(angle), sin(angle)));
+}
+
 float Utils::Dot(const sf::Vector2f& a, const sf::Vector2f& b)
 {
     return a.x * b.x + a.y * b.y;

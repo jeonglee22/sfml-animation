@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Ball.h"
+#include "Block.h"
 
 Ball::Ball(const std::string& name)
 	: GameObject(name)
@@ -58,9 +59,11 @@ void Ball::Release()
 void Ball::Reset()
 {	
 	SetVelocity(400.f);
-	SetDirection({ 1.f,0.f });
+	SetDirection({ 0.f,0.f });
 	SetScale({ 1.f,1.f });
 	SetRotation(0.f);
+
+	block = (Block*)SCENE_MGR.GetCurrentScene()->FindGameObject("Block");
 }
 
 void Ball::Update(float dt)
@@ -71,7 +74,6 @@ void Ball::Update(float dt)
 	}
 	else
 	{
-		std::cout << (int) hitBox.type << std::endl;
 		direction += 0.5f * sf::Vector2f(0, FRAMEWORK.GetGravity()) * dt * dt;
 		SetPosition(position + speed * dt * direction);
 		if (GetPosition().x > 1200.f)
@@ -91,6 +93,15 @@ void Ball::Update(float dt)
 		}
 		float radius = body.getRadius();
 		hitBox.UpdateTransform(body, radius);
+
+		if (Utils::CheckCollision(block->GetHitBox().rect, position, radius))
+		{
+			float angle = block->GetRotation();
+			direction.y *= -1.f;
+			direction = Utils::Direction(Utils::Angle(direction) + angle * 2);
+			SetDirection(direction);
+			SetVelocity(speed * restitution);
+		}
 	}
 }
 

@@ -48,6 +48,7 @@ public:
 
 	static float AngleRadian(const sf::Vector2f& vec);
 	static float Angle(const sf::Vector2f& vec);
+	static sf::Vector2f Direction(float angle);
 
 	static float Dot(const sf::Vector2f& a, const sf::Vector2f& b);
 

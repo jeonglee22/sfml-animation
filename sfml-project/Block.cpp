@@ -41,6 +41,20 @@ void Block::SetOrigin(Origins preset)
 
 void Block::Init()
 {
+	auto size = FRAMEWORK.GetWindowSizeF();
+
+	sortingLayer = SortingLayers::Foreground;
+	sortingOrder = 0;
+
+	restitution = 0.3f;
+
+	body.setSize({ size.x, 800.f });
+	body.setFillColor(sf::Color::Green);
+	SetScale({ 1.f,1.f });
+	SetRotation(30.f);
+	SetPosition({ 0.f , 400.f });
+
+	hitBox.SetType(HitBox::Type::Rectangle);
 }
 
 void Block::Release()
@@ -49,13 +63,16 @@ void Block::Release()
 
 void Block::Reset()
 {
+	
 }
 
 void Block::Update(float dt)
 {
+	hitBox.UpdateTransform(body, GetLocalBounds());
 }
 
 void Block::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+	hitBox.Draw(window);
 }

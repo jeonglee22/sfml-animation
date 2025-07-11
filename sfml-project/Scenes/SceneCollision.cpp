@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Ball.h"
+#include "Block.h"
 #include "SceneCollision.h"
 
 SceneCollision::SceneCollision()
@@ -20,18 +21,14 @@ void SceneCollision::Init()
 	ground.setPosition({ size.x / 2.f , 700.f });
 	ground.setFillColor(sf::Color::Green);
 
-	slide.setSize({ size.x, 800.f });
-	slide.setOrigin({ size.x / 2.f , 100.f });
-	slide.setRotation(30.f);
-	slide.setPosition({ 0.f , 400.f });
-	slide.setFillColor(sf::Color::Green);
-
 	ball = (Ball*)AddGameObject(new Ball("Ball"));
 	ball->GetBody().setRadius(10.f);
 	ball->SetOrigin(Origins::MC);
 
+	block = (Block*)AddGameObject(new Block("Block"));
+	block->SetOrigin(Origins::MC);
+
 	isShoot = false;
-	Variables::isDrawHitBox = false;
 
 	Scene::Init();
 }
@@ -64,7 +61,6 @@ void SceneCollision::Draw(sf::RenderWindow& window)
 {
 	window.draw(start);
 	window.draw(ground);
-	window.draw(slide);
 
 	Scene::Draw(window);
 }

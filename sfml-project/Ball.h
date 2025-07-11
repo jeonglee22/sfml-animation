@@ -3,6 +3,8 @@
 #include "Physics.h"
 #include "HitBox.h"
 
+class Block;
+
 class Ball :
     public GameObject
 {
@@ -14,6 +16,8 @@ protected:
 	float speed = 150.f;
 
 	bool isShoot = false;
+
+	Block* block;
 
 public:
 	Ball(const std::string& name = "");

@@ -1,13 +1,15 @@
 #pragma once
 #include "Scene.h"
+
+class Block;
 class Ball;
 
 class SceneCollision : public Scene
 {
 protected:
-	sf::RectangleShape slide;
 	sf::RectangleShape ground;
 	Ball* ball;
+	Block* block;
 	sf::RectangleShape start;
 
 	bool isShoot;
