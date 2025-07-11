@@ -211,6 +211,32 @@ bool Utils::CheckCollision(const sf::Sprite& shapeA, const sf::Sprite& shapeB)
     return PolygonsIntersect(pointsA, shapeA.getTransform(), pointsB, shapeB.getTransform());
 }
 
+bool Utils::CheckCollision(const sf::RectangleShape& shapeA, const sf::Vector2f& centerB, float radiusB)
+{
+    sf::Transform inverse = shapeA.getInverseTransform();
+    sf::Vector2f localCircleCenter = inverse.transformPoint(centerB);
+
+    sf::Vector2f rectCenter = shapeA.getPosition();
+    sf::Vector2f localRectCenter = inverse.transformPoint(rectCenter);
+
+    sf::Vector2f circleDistance;
+    circleDistance.x = std::abs(localCircleCenter.x - localRectCenter.x);
+    circleDistance.y = std::abs(localCircleCenter.y - localRectCenter.y);
+
+    if (circleDistance.x > (shapeA.getLocalBounds().width / 2.f + radiusB)) { return false; }
+    if (circleDistance.y > (shapeA.getLocalBounds().height / 2.f + radiusB)) { return false; }
+
+    if (circleDistance.x <= (shapeA.getLocalBounds().width / 2.f)) { return true; }
+    if (circleDistance.y <= (shapeA.getLocalBounds().height / 2.f)) { return true; }
+
+    float xValue = circleDistance.x - shapeA.getLocalBounds().width / 2.f;
+    float yValue = circleDistance.y - shapeA.getLocalBounds().height / 2.f;
+
+    float cornerDistance_sq = xValue * xValue + yValue * yValue;
+
+    return (cornerDistance_sq <= (radiusB * radiusB));
+}
+
 
 bool Utils::CheckCollision(const sf::RectangleShape& shapeA, const sf::RectangleShape& shapeB)
 {

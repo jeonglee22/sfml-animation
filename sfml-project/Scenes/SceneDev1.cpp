@@ -114,39 +114,45 @@ void SceneDev1::Update(float dt)
 		{
 			rect1->rotate(-90.f * dt);
 		}
-		if (InputMgr::GetKey(sf::Keyboard::E))
+		/*if (InputMgr::GetKey(sf::Keyboard::E))
 		{
 			rect1->rotate(90.f * dt);
-		}
+		}*/
 
 		// 두 번째 사각형 마우스 위치로 이동
-		rect2->setPosition(mousePos);
+		//rect2->setPosition(mousePos);
+		circle2->setPosition(mousePos);
 
 		// 마우스 좌클릭으로 두 번째 사각형 회전
 		if (InputMgr::GetMouseButton(sf::Mouse::Left))
 		{
 			rect2->rotate(180.f * dt);
 		}
-		if (InputMgr::GetMouseButton(sf::Mouse::Right))
+		/*if (InputMgr::GetMouseButton(sf::Mouse::Right))
 		{
 			rect2->rotate(-180.f * dt);
-		}
+		}*/
 
 		// 충돌 검사
-		isColliding = Utils::CheckCollision(*rect1, *rect2);
+		sf::Vector2f center2 = circle2->getPosition();
+		float radius2 = circle2->getRadius();
+		//isColliding = Utils::CheckCollision(*rect1, *rect2);
+		isColliding = Utils::CheckCollision(*rect1, center2, radius2);
 
 		// 충돌 상태에 따른 색상 변경
 		if (isColliding)
 		{
 			rect1->setFillColor(sf::Color::Red);
-			rect2->setFillColor(sf::Color::Red);
+			//rect2->setFillColor(sf::Color::Red);
+			circle2->setFillColor(sf::Color::Red);
 			collisionText->SetString("COLLISION DETECTED!");
 			collisionText->SetFillColor(sf::Color::Red);
 		}
 		else
 		{
 			rect1->setFillColor(sf::Color::Green);
-			rect2->setFillColor(sf::Color::Blue);
+			//rect2->setFillColor(sf::Color::Blue);
+			circle2->setFillColor(sf::Color::Blue);
 			collisionText->SetString("No Collision");
 			collisionText->SetFillColor(sf::Color::White);
 		}
@@ -197,8 +203,10 @@ void SceneDev1::Draw(sf::RenderWindow& window)
 	{
 		if (rect1)
 			window.draw(*rect1);
-		if (rect2)
-			window.draw(*rect2);
+		/*if (rect2)
+			window.draw(*rect2);*/
+		if (circle2)
+			window.draw(*circle2);
 	}
 	else // CollisionMode::Circle
 	{
